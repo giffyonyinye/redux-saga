@@ -1,12 +1,15 @@
-
-const contactReducer = (state, action) => {
+const initialState = {
+    contact: []
+}
+const contactReducer = (state=initialState, action) => {
     switch(action.type) {
-        case "CREATE_CONTACT":
+        case "SET_CONTACT":
 
             return {
                 ...state,
-                contactForm:[...state.contactForm, action.payload]
+                contact:[...state.contact, action.payload]
             }
+                
         default: 
         return state
     }

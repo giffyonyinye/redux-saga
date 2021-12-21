@@ -4,11 +4,11 @@ export const createContact = (payload) => {
         type: "CREATE_CONTACT",
         payload
     }
-}
+};
 
-export const deleteContact = (payload) => {
+export const setContact = (payload) => {
     return {
-        type: "DELETE",
+        type: "SET_CONTACT",
         payload
     }
 }

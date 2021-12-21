@@ -1,12 +1,22 @@
-import { createStore } from 'redux';
-import contactReducer  from './Reducers/reducer';
+import { createStore, applyMiddleware, compose } from "redux";
+import createSagaMiddleware from 'redux-saga';
+import rootReducer  from './rootReducer';
+import {rootSaga} from "./rootSaga";
+import {sessionService} from "redux-react-session";
 
-const contactStore = (state = {contactForm:[]}) => {
-    return createStore (
-        contactReducer,
-        state,
-        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__()
-    )
-}
+const contactStore = (preloadedState) => {
+    const sagaMiddleware = createSagaMiddleware();
+    const allMiddleware = applyMiddleware(sagaMiddleware);
+    const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+    const store = createStore(
+        rootReducer,
+        preloadedState,
+        composeEnhancer(allMiddleware)
+    );
+    sessionService.initSessionService(store, {refreshOnCheckAuth:true, driver:"LOCALSTORAGE"});
+    sagaMiddleware.run(rootSaga);
+    return store
+} 
 
 export default contactStore;

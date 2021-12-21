@@ -1,10 +1,14 @@
-// import { PropTypes } from "prop-types";
+// import { selectContact } from "./selector";
+import { useSelector } from "react-redux";
 import React from "react";
-const ContactList=(props) => { 
-    const deleteData = (index) => {
-        const newData = [...props.details];
-        newData.splice(index, 1);
-    }
+const ContactList=() => { 
+    // const deleteData = (index) => {
+    //     const newData = [...props.details];
+    //     newData.splice(index, 1);
+    // }
+
+    // console.log(selectContact())
+    const contact = useSelector(state => state.contactList.contact);
 
     return (
         <div style={{marginTop:"2rem"}}>
@@ -21,16 +25,16 @@ const ContactList=(props) => {
                     </thead>
 
                     <tbody>
-                        {props.details?.map((form,index) => (
+                        {contact?.map((form,index) => (
                             <tr  key = {index}>
                             <td>{form.firstName} {form.lastName}</td>
                             <td>{form.email}</td>
                             <td>{form.phone}</td>
                             <td>{form.dob}</td>
                             <td>{form.level}</td>
-                            <td>
+                            {/* <td>
                                 <button onClick={() => deleteData(index)}>DELETE</button>
-                            </td>
+                            </td> */}
                         </tr>
                         ))}
                         

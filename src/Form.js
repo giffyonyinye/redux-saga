@@ -4,6 +4,7 @@ import './form.css';
 import ContactList from './ContactList';
 import { connect } from 'react-redux';
 import {createContact} from './Actions/action';
+import { selectContact } from './selector';
 
 const Form = (props) =>{
 
@@ -16,7 +17,8 @@ const Form = (props) =>{
         level: ''
     });
 
-    const[details,setDetails] = useState([])
+
+
 
     const handleChange = (e) => {
         return setForm({...form, [e.target.name] : e.target.value});
@@ -24,11 +26,13 @@ const Form = (props) =>{
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        // setDetails([...details,form])
-        props.createContact(form)        
+        props.createContact(form) 
+        console.log("props",props.contactForm)  
     }
+    console.log("props",props.contactForm)  
+
     
-    // console.log(props.contactForm)
+    
     return (
         <div className="contact">
             <div className="form">
@@ -71,10 +75,19 @@ const Form = (props) =>{
                 </form>
             </div>
             
+            
+            {/* <tbody>
+                   { props.contactForm.map(u =>
+                       <tr key={u.id}>
+                           <td>{u.firstName}</td>
+                           <td>{u.lastName}</td>
+                       </tr>
+                   )} 
+               </tbody> */}
 
             <div>
                 <div>
-                    <ContactList details={props.contactForm} setDetails={setDetails}/>
+                    <ContactList />
                 </div>
             </div>
             
@@ -83,8 +96,7 @@ const Form = (props) =>{
 }
 
 const mapStateToProps = state => ({
-    contactForm: state.contactForm
-
+    contactForm: selectContact(state)           
 })
 
 const mapDispatchToProps = (dispatch) => ({
